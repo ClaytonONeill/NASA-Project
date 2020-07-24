@@ -1,6 +1,7 @@
 // IMPORTS //
 import React, { Component } from 'react';
 import Data from './Components/Data.jsx';
+import Header from './Components/Header.jsx'
 import './App.css';
 
 class App extends Component {
@@ -29,11 +30,18 @@ class App extends Component {
   render () {
     return (
       <React.Fragment>
-        <input
-        type='date'
-        id='date'
-        onChange={this.handleChange}/>
-        <input type='submit' onClick={this.handleSubmit}/>
+        <Header />
+        <div className='search-contain'>
+          <input
+            type='date'
+            id='date'
+            onChange={this.handleChange}/>
+          <input
+            type='submit'
+            id='submit'
+            value='GO'
+            onClick={this.handleSubmit}/>
+        </div>
         <Data
           data={this.state.data}
          />
