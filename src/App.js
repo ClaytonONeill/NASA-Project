@@ -48,8 +48,6 @@ class App extends Component {
 
     this.setState({
       date: `${year}-${month}-${day}`}, this.handleSubmit);
-
-    console.log(this.state.date);
   }
 
 
