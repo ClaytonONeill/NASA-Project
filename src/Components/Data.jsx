@@ -10,13 +10,16 @@ class Data extends Component {
           <h1
             className='data-title'>{this.props.data.title}
           </h1>
+          <h3>
+            {this.props.data.date}
+          </h3>
         </div>
         <div className='data-image-contain'>
           <img
             src={this.props.data.hdurl}
             className='data-image'>
           </img>
-        </div>  
+        </div>
         <div className='data-info-contain'>
           <p
             className='data-p'>{this.props.data.explanation}
