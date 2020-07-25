@@ -17,7 +17,8 @@ class Data extends Component {
         <div className='data-image-contain'>
           <img
             src={this.props.data.hdurl}
-            className='data-image'>
+            className='data-image'
+            alt={this.props.data.title}>
           </img>
         </div>
         <div className='data-info-contain'>
