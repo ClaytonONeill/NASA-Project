@@ -1,3 +1,16 @@
+# NASA Daily Image Project
+
+This was a quick build utilizing NASA's APOD (Astronomy Picture of the Day) API.
+
+Link to the live site: https://claytononeill.github.io/NASA-Project/
+
+I had help deploying this project using the information provided in this article:
+
+https://dev.to/yuribenjamin/how-to-deploy-react-app-in-github-pages-2a1f
+
+### Thanks for checking it out! 
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
