@@ -1,14 +1,19 @@
 // IMPORTS //
 import React, { Component } from 'react';
+
+// COMPONENTS // 
 import Data from './Components/Data.jsx';
 import Header from './Components/Header.jsx'
+
+// STYLES // 
 import './App.css';
 
 class App extends Component {
   state = {
     info: false,
     date: '',
-    data: []
+    data: [],
+    errorMessage: false
   };
 
   displayInfo = () => {
@@ -18,6 +23,26 @@ class App extends Component {
     console.log(this.state.info)
   }
 
+  randomDate = () => {
+    // Get random year, month, and day:
+    let year = Math.ceil(Math.random() * (2020 - 1995) + 1995);
+    let month = Math.ceil(Math.random() * (12 - 1) + 1);
+    let day = Math.ceil(Math.random() * (31 - 1) + 1);
+
+    // set up date variables:
+    let date = new Date(`${year}-${month}-${day}`)
+    let ms = date.getTime();
+    let earliest = new Date('06/20/1995').getTime();
+    let today = new Date().getTime();
+
+    // If date is too early or too late, run this function again:
+    if (ms < earliest || ms > today) this.randomDate();
+
+    let formattedDate = date.toISOString().split('T')[0];
+
+    this.handleSubmit(formattedDate)
+  }
+
   handleChange = (event) => {
     this.setState({
       [event.target.id]: event.target.value
@@ -25,33 +50,29 @@ class App extends Component {
   }
 
 
-  handleSubmit = (e) => {
-    fetch(`https://api.nasa.gov/planetary/apod?date=${this.state.date}&hd=true&api_key=w1yWNsstPdbQ72g5P3hBytvj4ZnsnPA83YRwYy0Q`)
+  handleSubmit = (date) => {
+    fetch(`https://api.nasa.gov/planetary/apod?date=${date}&hd=true&api_key=w1yWNsstPdbQ72g5P3hBytvj4ZnsnPA83YRwYy0Q`)
     .then(res => res.json())
-    .then(data => {
-      this.setState({ data })
+    .then(json => {
+      if (json.code === 404) {
+        console.log('ran into 404: ', json.msg)
+        this.setState({
+          errorMessage: true
+        })
+      } else {
+        this.setState({
+           data: json,
+           date
+        })
+      }
     })
-
+    .catch((error) => console.log(error))
   };
 
-  randomImage = () => {
-    let year = Math.ceil(Math.random() * (2020 - 1995) + 1995);
-    let month = Math.ceil(Math.random() * (12 - 1) + 1);
-    let day = Math.ceil(Math.random() * (31 - 1) + 1);
-
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    if (day < 10) {
-      day = `0${day}`;
-    }
-
-    this.setState({
-      date: `${year}-${month}-${day}`}, this.handleSubmit);
-  }
 
 
   render () {
+    let maxDate = new Date().toISOString().split('T')[0];
     return (
       <React.Fragment>
         <Header
@@ -61,16 +82,20 @@ class App extends Component {
         <div className='search-contain'>
           <input
             type='date'
+            min='1995-06-20'
+            max={maxDate}
             id='date'
+            value={this.state.date}
             onChange={this.handleChange}/>
           <input
             type='submit'
             id='submit'
             value='GO'
-            onClick={this.handleSubmit}/>
+            disabled={!this.state.date}
+            onClick={() => this.handleSubmit(this.state.date)}/>
           <button
             className='random-button'
-            onClick={this.randomImage}>
+            onClick={this.randomDate}>
             Random Image
           </button>
         </div>
