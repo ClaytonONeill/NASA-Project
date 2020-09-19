@@ -14,7 +14,7 @@ class Header extends Component {
           <div className={this.props.showMe ? 'how-to-info' : 'how-to-info-hide'}>
             <p>
               Select a date between June 20th, 1995 (06-20-1995) and todays date then hit the GO button.
-              (To get today's date, just click the calendar adn hit today!) This will generate a unique image from that date and also provide an explanation telling you whats going on.
+              (To get today's date, just click the calendar and hit today!) This will generate a unique image from that date and also provide an explanation telling you whats going on.
 
               Hit the random button to, you guessed it, grab a random image!
 
